@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const logger = require('./logger');
+const ArticlesService = require('./articles-service');
 
 const app = express();
 
@@ -26,6 +27,15 @@ app.use(function validateBearerToken(req, res, next) {
   }
   // move to the next middleware
   next();
+});
+
+app.get('/articles', (req, res, next) => {
+  const knexInstance = req.app.get('db');
+  ArticlesService.getAllArticles(knexInstance)
+    .then(articles => {
+      res.json(articles);
+    })
+    .catch(next);
 });
 
 app.get('/', (req, res) => {
