@@ -1,6 +1,6 @@
 require('dotenv').config();
 /*global expect*/
-const ArticlesService = require('../src/articles-service');
+const ArticlesService = require('../src/articles/articles-service');
 const knex = require('knex');
 
 
@@ -31,7 +31,7 @@ describe('Articles service object', function() {
   before(() => {
     db = knex({
       client: 'pg',
-      connection: process.env.TEST_DB_URL
+      connection: process.env.KNEX_PRACTICE_TEST_DB_URL
     });
   });
 
